@@ -23,7 +23,7 @@ $(document).ready(function () {
     // Function to show the history of guesses
     function guessHistory(guessedNumber) {
         $('#guessList').append('<li>' + guessedNumber + '</li>');
-        if (counter < 10 && counter > 8) {
+        if (counter < 11 && counter > 9) {
             $('#guessList').append('<br>');
         }
     }
