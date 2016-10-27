@@ -23,6 +23,9 @@ $(document).ready(function () {
     // Function to show the history of guesses
     function guessHistory(guessedNumber) {
         $('#guessList').append('<li>' + guessedNumber + '</li>');
+        if (counter < 10 && counter > 8) {
+            $('#guessList').append('<br>');
+        }
     }
 
     // Function to implement a simple validation of the user input
