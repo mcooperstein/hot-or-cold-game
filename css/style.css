@@ -300,3 +300,9 @@ ul.guessBox li {
     margin: 0.2em;
     color: #fff;
 }
+
+header > h3 {
+    color: white;
+    font-size: 26px;
+    margin-bottom: 10px;
+}
