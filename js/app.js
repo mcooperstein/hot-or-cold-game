@@ -4,6 +4,17 @@ $(document).ready(function () {
     var oldGuess = 0;
     var counter = 20;
 
+    var score = 20;
+    var highscore = $("#highScore").html();
+    $("#lastScore").text(localStorage.getItem('last-score'));
+    /*if (highscore !== null) {
+        if (score < highscore) {
+            localStorage.setItem("highScore", highScore);
+        } else {
+            localStorage.setItem("highScore", score);
+        }
+    }*/
+
     // Function to start a new game
     function newGame() {
         document.location.reload(true);
@@ -59,6 +70,7 @@ $(document).ready(function () {
         else {
             guessFeedback(secretNumber, guessedNumber);
             counter--;
+            score--;
             if (counter == 0) {
                 $('#feedback').text("You lose. The number was " + secretNumber);
                 document.getElementById("userGuess").disabled = true;
@@ -91,6 +103,22 @@ $(document).ready(function () {
             document.body.style.backgroundColor = '#ff0404';
             document.getElementById("userGuess").disabled = true;
             document.getElementById("guessButton").disabled = true;
+            var score = 20;
+            var lastGame = (score - counter + 1);
+            //display the score
+            //$("#lastScore").text(lastGame);
+            //load the saved last score from local storage
+            //var lastScore = localStorage.getItem("last-score");
+            //save the score into local storage
+            localStorage.setItem("last-score", lastGame);
+
+            /*if (score > highscore) {
+                localStorage.setItem("highScore", highScore);
+                $("#highScore").text(highScore);
+            } else {
+                localStorage.setItem("highScore", score);
+                $("#highScore").text(score);
+            }*/
         }
     }
 
