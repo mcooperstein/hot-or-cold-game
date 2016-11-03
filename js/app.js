@@ -9,6 +9,10 @@ $(document).ready(function () {
     var newScore = 1;
     var score = 20;
     var highscore = localStorage.getItem("high-score");
+    if (highscore == null) {
+        highscore = 20;
+        localStorage.setItem("high-score", highscore);
+    }
     //Display the high score that is saved in the local storage
     $("#highScore").text(highscore);
     //Display the score of the previous game
@@ -109,7 +113,8 @@ $(document).ready(function () {
             //save the score that will be displayed as previous game's data into local storage
             localStorage.setItem("last-score", lastGame);
 
-            if (newScore < highscore) {
+            //if highscore, alert the player and save highscore to local storage
+            if (highscore != null && newScore < highscore) {
                 highscore = newScore;
                 localStorage.setItem("high-score", highscore);
                 alert("High Score!!!");
@@ -123,9 +128,7 @@ $(document).ready(function () {
         var guessedNumber = $('#userGuess').val();
         var newGuess = guessedNumber;
         $("#guessList").show();
-        //validate all the numbers
         validation(guessedNumber);
-
     });
 
     $(document).on('keypress', function (e) {
@@ -135,10 +138,15 @@ $(document).ready(function () {
             var guessedNumber = parseInt($('#userGuess').val(), 10);
             var newGuess = guessedNumber;
             $("#guessList").show();
-            //validate all the numbers
             validation(guessedNumber);
-
         }
+    });
+
+    // Clear the Local Storage to erase high score and previous game data
+    $("#reset").click(function () {
+        window.localStorage.clear();
+        location.reload();
+        return false;
     });
 
     // Display information modal box
