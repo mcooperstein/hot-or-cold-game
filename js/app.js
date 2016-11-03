@@ -1,19 +1,18 @@
 $(document).ready(function () {
 
+    $("#guessList").hide();
+
     var secretNumber = generateRandomNumber(1, 100);
+    //console.log(secretNumber);
     var oldGuess = 0;
     var counter = 20;
-
+    var newScore = 1;
     var score = 20;
-    var highscore = $("#highScore").html();
+    var highscore = localStorage.getItem("high-score");
+    //Display the high score that is saved in the local storage
+    $("#highScore").text(highscore);
+    //Display the score of the previous game
     $("#lastScore").text(localStorage.getItem('last-score'));
-    /*if (highscore !== null) {
-        if (score < highscore) {
-            localStorage.setItem("highScore", highScore);
-        } else {
-            localStorage.setItem("highScore", score);
-        }
-    }*/
 
     // Function to start a new game
     function newGame() {
@@ -71,6 +70,7 @@ $(document).ready(function () {
             guessFeedback(secretNumber, guessedNumber);
             counter--;
             score--;
+            newScore++;
             if (counter == 0) {
                 $('#feedback').text("You lose. The number was " + secretNumber);
                 document.getElementById("userGuess").disabled = true;
@@ -105,20 +105,15 @@ $(document).ready(function () {
             document.getElementById("guessButton").disabled = true;
             var score = 20;
             var lastGame = (score - counter + 1);
-            //display the score
-            //$("#lastScore").text(lastGame);
-            //load the saved last score from local storage
-            //var lastScore = localStorage.getItem("last-score");
-            //save the score into local storage
+
+            //save the score that will be displayed as previous game's data into local storage
             localStorage.setItem("last-score", lastGame);
 
-            /*if (score > highscore) {
-                localStorage.setItem("highScore", highScore);
-                $("#highScore").text(highScore);
-            } else {
-                localStorage.setItem("highScore", score);
-                $("#highScore").text(score);
-            }*/
+            if (newScore < highscore) {
+                highscore = newScore;
+                localStorage.setItem("high-score", highscore);
+                alert("High Score!!!");
+            }
         }
     }
 
@@ -127,7 +122,7 @@ $(document).ready(function () {
     $('#guessButton').on('click', function () {
         var guessedNumber = $('#userGuess').val();
         var newGuess = guessedNumber;
-
+        $("#guessList").show();
         //validate all the numbers
         validation(guessedNumber);
 
@@ -139,7 +134,7 @@ $(document).ready(function () {
             e.preventDefault();
             var guessedNumber = parseInt($('#userGuess').val(), 10);
             var newGuess = guessedNumber;
-
+            $("#guessList").show();
             //validate all the numbers
             validation(guessedNumber);
 
